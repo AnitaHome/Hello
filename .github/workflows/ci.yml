@@ -1,0 +1,35 @@
+name: 基本 CI 檢查
+
+# 這是觸發器部分！我們設定了兩個事件來啟動這個工作流程。
+on:
+  # 1. 當有人推送到 'main' 分支時執行
+  push:
+    branches: [ main ]
+  
+  # 2. 當有人對 'main' 分支開啟、同步或重新開啟 PR 時執行
+  pull_request:
+    branches: [ main ]
+    types: [ opened, synchronize, reopened ]
+
+# 這是一個單一的工作 (job) 設定
+jobs:
+  build_and_test:
+    # 這個工作將在最新的 Ubuntu 虛擬機上運行
+    runs-on: ubuntu-latest
+    
+    # 定義這個工作所執行的步驟
+    steps:
+      # 步驟 1: 檢查程式碼
+      - name: 檢查程式碼
+        # 這是 GitHub 提供的 Action，用於將程式碼庫內容下載到 runner 上
+        uses: actions/checkout@v4
+
+      # 步驟 2: 模擬安裝相依性 (例如：npm install 或 pip install)
+      - name: 模擬安裝
+        run: echo "--- 模擬安裝程式相依性完成！ ---"
+
+      # 步驟 3: 模擬執行測試
+      - name: 模擬執行測試
+        run: |
+          echo "正在運行單元測試..."
+          echo "單元測試成功！"
